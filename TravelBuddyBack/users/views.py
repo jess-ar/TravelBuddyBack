@@ -44,7 +44,7 @@ class UserListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class UserDeleteView(APIView):
+class DeleteUserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, username):
