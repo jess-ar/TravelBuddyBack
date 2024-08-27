@@ -8,6 +8,7 @@ from .models import CustomUser
 import jwt
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterView(APIView):
@@ -29,9 +30,13 @@ class LoginView(APIView):
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if user is not None:
-            payload = {'id': user.id, 'username': user.username}
-            token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
-            return Response({'token': token}, status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            access_token = str(refresh.access_token)
+            refresh_token = str(refresh)
+            return Response({
+                'access': access_token,
+                'refresh': refresh_token
+            }, status=status.HTTP_200_OK)
         return Response({'error': 'Credenciales inválidas'}, status=status.HTTP_400_BAD_REQUEST)
 
 
