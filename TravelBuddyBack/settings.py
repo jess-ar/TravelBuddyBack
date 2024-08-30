@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import environ
+import os
+from dotenv import load_dotenv
 import dj_database_url
 
 # Inicializa el entorno
@@ -20,18 +22,20 @@ env = environ.Env()
 # Lee el archivo .env
 environ.Env.read_env()
 
+# Cargar el archivo .env
+load_dotenv()
+
+print("DB_NAME:", os.getenv('DB_NAME'))
+print("DB_USER:", os.getenv('DB_USER'))
+print("DB_PASSWORD:", os.getenv('DB_PASSWORD'))
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configuraciones basadas en el entorno
-if env('ENV') == 'production':
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = False
 
-CSRF_TRUSTED_ORIGINS = ['https://yourdomain.loca.lt']
 ALLOWED_HOSTS = ['*']
-
 AUTH_USER_MODEL = 'users.CustomUser'
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +43,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = 'django-insecure-ip-hn-fk%-y0&0#qmf8mdpkc!fondj^%=i@%0*_g=a=v%!yh&x'
 
 # Application definition
 
@@ -95,16 +99,14 @@ WSGI_APPLICATION = 'TravelBuddyBack.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'TravelBuddy_test',
-        'USER': 'postgres',
-        'PASSWORD': 'toor',
         'HOST': '127.0.0.1',
         'PORT': '5432',
-        'OPTIONS': {
-            'client_encoding': 'UTF8',
-        },
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'NAME': 'TravelBuddy',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -183,3 +185,12 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+
+
+CORS_ALLOWED_ORIGINS = [
+    "https://travel-buddy-f5.netlify.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+]
+
+
