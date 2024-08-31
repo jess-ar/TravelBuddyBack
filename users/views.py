@@ -14,18 +14,49 @@ from rest_framework.permissions import BasePermission
 from django.conf import settings
 from django.http import JsonResponse
 import requests
+from django.shortcuts import render
 
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            user = serializer.save()
-            return Response({'detail': 'Successful user registration'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = UserSerializer(data=request.data)
+            print("Checking if the serializer data is valid...")
 
+            if serializer.is_valid():
+                user = serializer.save()
+                print("User saved successfully")
+
+                email = request.data.get('email')
+                password = request.data.get('password')
+                user = authenticate(username=email, password=password)
+
+                if user is not None:
+                    login(request, user)
+                    print("User authenticated successfully")
+
+                    refresh = RefreshToken.for_user(user)
+                    access_token = str(refresh.access_token)
+                    refresh_token = str(refresh)
+                    print("Tokens generated successfully")
+
+                    return Response({
+                        'access': access_token,
+                        'refresh': refresh_token,
+                        'message': 'User registered successfully'
+                    }, status=status.HTTP_201_CREATED)
+                else:
+                    print("Authentication failed")
+                    return Response({'error': 'Authentication failed.'}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                print(f"Validation errors: {serializer.errors}")
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        except Exception as e:
+            print(f"Unknown error: {str(e)}")
+            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -71,6 +102,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
+
 def search_images(request):
     query = request.GET.get('query', '')
     if not query:
@@ -87,6 +119,7 @@ def search_images(request):
     else:
         return JsonResponse({'error': 'Error fetching images from Bing API'}, status=response.status_code)
 
+
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -99,3 +132,5 @@ class UserDetailView(APIView):
 class IsSuperUser(BasePermission):
     def has_permission(self, request, view):
         return bool(request.user and request.user.is_superuser)
+
+
