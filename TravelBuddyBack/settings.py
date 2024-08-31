@@ -13,6 +13,8 @@ from datetime import timedelta
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import environ
+
 
 load_dotenv()
 BING_API_KEY = '15556aefa8ff49fda1e4a610830d6004'
@@ -103,8 +105,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': '',
-        'NAME': 'TravelBuddy',
+        'PASSWORD': 'toor',
+        'NAME': 'TravelBuddy_test',
     }
 }
 
