@@ -11,6 +11,9 @@ from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import BasePermission
+from django.conf import settings
+from django.http import JsonResponse
+import requests
 
 
 class RegisterView(APIView):
@@ -68,6 +71,21 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
+def search_images(request):
+    query = request.GET.get('query', '')
+    if not query:
+        return JsonResponse({'error': 'No query parameter provided'}, status=400)
+
+    headers = {"Ocp-Apim-Subscription-Key": settings.BING_API_KEY}
+    params = {"q": query, "count": 10, "license": "public", "imageType": "photo"}
+    response = requests.get("https://api.bing.microsoft.com/v7.0/images/search", headers=headers, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        images = [{'url': img['contentUrl'], 'name': img.get('name', '')} for img in data.get('value', [])]
+        return JsonResponse(images, safe=False)
+    else:
+        return JsonResponse({'error': 'Error fetching images from Bing API'}, status=response.status_code)
 
 class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]

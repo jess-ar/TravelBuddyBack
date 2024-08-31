@@ -11,13 +11,12 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
-import environ
 import os
 from dotenv import load_dotenv
-import dj_database_url
 
-# Inicializa el entorno
-env = environ.Env()
+load_dotenv()
+BING_API_KEY = '15556aefa8ff49fda1e4a610830d6004'
+
 
 # Lee el archivo .env
 environ.Env.read_env()
@@ -32,18 +31,19 @@ print("DB_PASSWORD:", os.getenv('DB_PASSWORD'))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Configuraciones basadas en el entorno
-DEBUG = False
-
-ALLOWED_HOSTS = ['*']
-AUTH_USER_MODEL = 'users.CustomUser'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
 SECRET_KEY = 'django-insecure-ip-hn-fk%-y0&0#qmf8mdpkc!fondj^%=i@%0*_g=a=v%!yh&x'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+ALLOWED_HOSTS = []
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 # Application definition
 
@@ -92,6 +92,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'TravelBuddyBack.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -126,6 +127,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -136,6 +138,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -162,6 +165,8 @@ SIMPLE_JWT = {
     'ALGORITHM': 'HS256',
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
@@ -185,6 +190,7 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
+ALLOWED_HOSTS = ['*']
 
 
 CORS_ALLOWED_ORIGINS = [
