@@ -14,14 +14,13 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'password1', 'password2', 'is_staff', 'is_active')}
+            'fields': ('email', 'username', 'password1', 'is_staff', 'is_active')}
          ),
     )
     search_fields = ('email', 'username',)
     ordering = ('email',)
 
 
-# Evitar registrar si ya está registrado
 try:
     admin.site.register(CustomUser, CustomUserAdmin)
 except admin.sites.AlreadyRegistered:
