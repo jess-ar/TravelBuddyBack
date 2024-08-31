@@ -105,8 +105,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': 'toor',
-        'NAME': 'TravelBuddy_test',
+        'PASSWORD': '',
+        'NAME': 'TravelBuddy',
     }
 }
 
