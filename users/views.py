@@ -9,6 +9,9 @@ import jwt
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
+from django.http import JsonResponse
+import requests
 
 
 class RegisterView(APIView):
@@ -17,7 +20,7 @@ class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
-            user = serializer.save()
+            serializer.save()
             return Response({'detail': 'Usuario registrado con éxito'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -61,3 +64,18 @@ class DeleteUserView(APIView):
             return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
 
 
+def search_images(request):
+    query = request.GET.get('query', '')
+    if not query:
+        return JsonResponse({'error': 'No query parameter provided'}, status=400)
+
+    headers = {"Ocp-Apim-Subscription-Key": settings.BING_API_KEY}
+    params = {"q": query, "count": 10, "license": "public", "imageType": "photo"}
+    response = requests.get("https://api.bing.microsoft.com/v7.0/images/search", headers=headers, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        images = [{'url': img['contentUrl'], 'name': img.get('name', '')} for img in data.get('value', [])]
+        return JsonResponse(images, safe=False)
+    else:
+        return JsonResponse({'error': 'Error fetching images from Bing API'}, status=response.status_code)
