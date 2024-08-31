@@ -13,15 +13,9 @@ from datetime import timedelta
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import environ
 
-
-load_dotenv()
 BING_API_KEY = '15556aefa8ff49fda1e4a610830d6004'
 
-
-# Lee el archivo .env
-environ.Env.read_env()
 
 # Cargar el archivo .env
 load_dotenv()
@@ -41,10 +35,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ip-hn-fk%-y0&0#qmf8mdpkc!fondj^%=i@%0*_g=a=v%!yh&x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+
 AUTH_USER_MODEL = 'users.CustomUser'
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -105,8 +100,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': '',
-        'NAME': 'TravelBuddy',
+        'PASSWORD': 'toor',
+        'NAME': 'TravelBuddy_test',
     }
 }
 
@@ -192,7 +187,6 @@ CORS_ALLOW_METHODS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
-ALLOWED_HOSTS = ['*']
 
 
 CORS_ALLOWED_ORIGINS = [
