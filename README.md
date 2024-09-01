@@ -8,7 +8,7 @@
 
 1. **Fork the repository**
 
-   Open the repository [TravelBuddyBack]() in GitHub and click the "Fork" button located in the upper right corner of the page. It creates a copy of our repository in your own Github account.
+   Open the repository [TravelBuddyBack](https://github.com/jess-ar/TravelBuddyBack.git) in GitHub and click the "Fork" button located in the upper right corner of the page. It creates a copy of our repository in your own Github account.
 
 
 2. **Clone your forked repository**
