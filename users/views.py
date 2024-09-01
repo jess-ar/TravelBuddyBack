@@ -15,6 +15,7 @@ from django.conf import settings
 from django.http import JsonResponse
 import requests
 from django.shortcuts import render
+from rest_framework_simplejwt.tokens import OutstandingToken, BlacklistedToken
 
 
 class RegisterView(APIView):
@@ -57,6 +58,7 @@ class RegisterView(APIView):
         except Exception as e:
             print(f"Unknown error: {str(e)}")
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -134,3 +136,26 @@ class IsSuperUser(BasePermission):
         return bool(request.user and request.user.is_superuser)
 
 
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserMeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            "username": user.username,
+            "email": user.email,
+            "avatar": user.profile.avatar.url if user.profile.avatar else None,
+        })
