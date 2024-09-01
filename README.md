@@ -1,10 +1,10 @@
-# TravelBuddyBackend
+# TravelBuddyBackend 🧳✈️
 
 ## Prerequisites
 - Python vs 3.12
 - Postgresql 
 
-## Installation and execution
+## Installation and execution  🛠️
 
 1. **Fork the repository**
 
@@ -17,7 +17,7 @@
 
 ```bash
 # Clone this repository 
-
+git clone https://github.com/your-github-profile/your-project-name.git
 ```
 
 3. **In Pycharm, open the directory you've just cloned**
@@ -88,11 +88,12 @@ python manage.py migrate
 git checkout -b feature/yourbranchname
 ```
 
-## Structure documentation
+## How to interact  
 
 Users interact with the frontend website and call this API, which uses a PostgreSQL database to store data. 
 
-Configuration variables and cached files should be added to `.gitignore` so they are not tracked:
+[TravelBuddy](https://github.com/Carlassanchez24/TravelBuddy.git)
 
-	.env
-	__pycache__/
+Configuration variables and cached files should be added to `.gitignore` so they are not tracked: .env
+
+
