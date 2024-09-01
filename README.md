@@ -2,26 +2,29 @@
 
 ## Prerequisites
 - Python vs 3.12
-- Postgresql 
+- Postgresql
+
+<br>
 
 ## Installation and execution  🛠️
 
 1. **Fork the repository**
 
-   Open the repository [TravelBuddyBack](https://github.com/jess-ar/TravelBuddyBack.git) in GitHub and click the "Fork" button located in the upper right corner of the page. It creates a copy of our repository in your own Github account.
-
+   Open the repository [TravelBuddyBack](https://github.com/jess-ar/TravelBuddyBack) and click the "Fork" button located in the upper right corner of the page. It creates a copy of our repository in your own Github account.
+<br>
 
 2. **Clone your forked repository**
 
-   Open a Git Bash terminal and run the command with the link to your new repository:
+   Open a Git Bash terminal and clone your new repository:
 
 ```bash
 # Clone this repository 
 git clone https://github.com/your-github-profile/your-project-name.git
+
 ```
 
-3. **In Pycharm, open the directory you've just cloned**
-
+3. **In Pycharm, open the project's directory you've just cloned**
+<br> 
 
 4. **Create the virtual environment and then activate it**
 
@@ -39,6 +42,7 @@ venv\Scripts\activate
 venv\Scripts\deactivate
 
 ```
+<br>
 
 5. **Continue with the following installations**
 ```bash
@@ -79,6 +83,7 @@ python manage.py makemigrations
 python manage.py migrate
 
 ```
+<br>
 
 6. **Create your branch and start working!**
 
@@ -87,6 +92,7 @@ python manage.py migrate
 
 git checkout -b feature/yourbranchname
 ```
+<br>
 
 ## How to interact  
 
