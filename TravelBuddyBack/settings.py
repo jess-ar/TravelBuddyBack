@@ -100,19 +100,19 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '5432',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
         'NAME': 'TravelBuddy',
     }
 }
-# ⚠️ Important Note:
-# We are aware that hardcoding credentials directly in the code is a bad practice.
-# Ideally, environment variables or a secrets management system should be used to protect this information.
-# However, due to technical limitations and our current stage of learning,
-# we have decided to keep these credentials explicitly in the code to facilitate development.
-# This code should not be used in a production environment without first implementing
-# proper security measures, such as using environment variables and setting up
-# a .env file to manage sensitive credentials.
 
+#⚠️ Important Note:
+#We are aware that hardcoding credentials directly in the code is a bad practice.
+#Ideally, environment variables or a secrets management system should be used to protect this information.
+#However, due to technical limitations and our current stage of learning,
+#we have decided to keep these credentials explicitly in the code to facilitate development.
+#This code should not be used in a production environment without first implementing
+#proper security measures, such as using environment variables and setting up
+#a .env file to manage sensitive credentials.
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -202,5 +202,3 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:8000",
 ]
-
-
